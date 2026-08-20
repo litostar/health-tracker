@@ -1,0 +1,207 @@
+/* ===== 清爽极简 SaaS 风格（Clean Minimal SaaS） =====
+ * 设计关键词：白底、浅灰边框卡片、大圆角、indigo 主按钮、柔和阴影
+ */
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #f8fafc;           /* 页面底色：极浅冷灰 */
+  --card: #ffffff;         /* 卡片纯白 */
+  --ink: #111827;          /* 主文字：深炭灰 */
+  --muted: #6b7280;        /* 次要文字：中灰 */
+  --primary: #4f46e5;      /* Indigo-600：主按钮、选中态 */
+  --primary-light: #eef2ff;/* Indigo-50：轻量背景 */
+  --primary-d: #4338ca;    /* Indigo-700：按下态 */
+  --red: #ef4444;          /* 柔和红 */
+  --green: #10b981;        /* 柔和绿 */
+  --orange: #f59e0b;       /* 琥珀： warning / 达标 */
+  --line: #e5e7eb;         /* 卡片/输入框边框 */
+  --line-light: #f3f4f6;   /* 分割线、hover 背景 */
+}
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", "Noto Sans SC", sans-serif;
+  background: var(--bg); color: var(--ink); font-size: 15px; line-height: 1.5;
+  padding-bottom: 72px; /* 给底部导航留位 */
+}
+.muted { color: var(--muted); }
+.small { font-size: 12px; }
+.center { text-align: center; }
+.tip { margin-top: 10px; }
+
+/* 顶部栏：白底、细边框、简洁 */
+.topbar {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(255,255,255,.92); backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--line);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 16px; font-weight: 600;
+}
+.logo { display: flex; align-items: center; gap: 8px; color: var(--ink); font-size: 16px; }
+.logo::before {
+  content: "🍎"; font-size: 18px;
+}
+.ghost {
+  background: transparent; color: var(--muted); border: 1px solid var(--line);
+  border-radius: 8px; padding: 5px 12px; font-size: 13px; cursor: pointer;
+  transition: all .15s;
+}
+.ghost:hover { background: var(--line-light); color: var(--ink); }
+
+/* 底部导航 */
+.tabs {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 10;
+  display: flex; background: #fff; border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.tab { flex: 1; border: 0; background: none; padding: 10px 2px 8px; font-size: 11px;
+  color: var(--muted); cursor: pointer; display: flex; flex-direction: column;
+  align-items: center; gap: 3px; transition: color .15s; }
+.tab::before { font-size: 18px; line-height: 1; }
+.tab[data-tab="home"]::before { content: "🏠"; }
+.tab[data-tab="food"]::before { content: "🍽️"; }
+.tab[data-tab="watch"]::before { content: "⌚"; }
+.tab[data-tab="profile"]::before { content: "👤"; }
+.tab[data-tab="exam"]::before { content: "🩺"; }
+.tab[data-tab="trend"]::before { content: "📈"; }
+.tab.active { color: var(--primary); font-weight: 700; }
+
+/* 内容区 */
+main { padding: 16px; max-width: 560px; margin: 0 auto; }
+.tab-pane { display: none; }
+.tab-pane.active { display: block; animation: fade .2s; }
+@keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* 卡片 */
+.card {
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+  padding: 16px; margin-bottom: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+.card h3 { margin: 0 0 12px; font-size: 15px; color: var(--ink); font-weight: 600; }
+
+/* 表单 */
+label { display: block; font-size: 13px; color: var(--muted); margin: 12px 0 5px; font-weight: 500; }
+input, select {
+  width: 100%; padding: 11px 12px; border: 1px solid var(--line);
+  border-radius: 10px; font-size: 15px; background: #fff; color: var(--ink);
+  transition: border-color .15s, box-shadow .15s;
+}
+input:focus, select:focus {
+  outline: none; border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79,70,229,.12);
+}
+.row { display: flex; gap: 10px; }
+.row > * { flex: 1; }
+button.primary {
+  width: 100%; margin-top: 14px; padding: 12px; border: 0;
+  border-radius: 10px; background: var(--primary); color: #fff; font-size: 15px;
+  font-weight: 600; cursor: pointer; transition: background .15s, transform .05s;
+}
+button.primary:hover { background: var(--primary-d); }
+button.primary:active { transform: scale(.99); }
+
+/* 首页指标 */
+.metric { display: flex; justify-content: space-between; align-items: baseline;
+  padding: 7px 0; font-size: 15px; }
+.metric b { font-size: 18px; }
+.progress { height: 10px; background: var(--line-light); border-radius: 99px; overflow: hidden; margin-top: 6px; }
+.bar { height: 100%; width: 0; background: var(--primary); transition: width .4s; }
+.status-box {
+  margin-bottom: 14px; padding: 12px 14px; border-radius: 12px; font-size: 14px;
+  background: var(--primary-light); color: var(--primary-d); text-align: center;
+  border: 1px solid rgba(79,70,229,.12);
+}
+.status-box.deficit { background: #ecfdf5; color: #047857; border-color: rgba(16,185,129,.15); }
+.status-box.surplus { background: #fef2f2; color: #b91c1c; border-color: rgba(239,68,68,.12); }
+.status-box.unknown { background: #f9fafb; color: var(--muted); border-color: var(--line); }
+hr { border: 0; border-top: 1px solid var(--line); margin: 14px 0; }
+
+/* 餐次选择 */
+.meal-tabs { display: flex; gap: 8px; margin: 8px 0 6px; }
+.meal {
+  flex: 1; padding: 9px 4px; border: 1px solid var(--line); background: #fff;
+  border-radius: 10px; font-size: 13px; color: var(--muted); cursor: pointer;
+  transition: all .15s;
+}
+.meal.active { border-color: var(--primary); color: var(--primary); background: var(--primary-light); font-weight: 600; }
+
+/* 列表 */
+.list { list-style: none; padding: 0; margin: 0 0 12px; }
+.list li {
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  padding: 12px 14px; margin-bottom: 10px;
+  display: flex; justify-content: space-between; align-items: center;
+  box-shadow: 0 1px 2px rgba(0,0,0,.03);
+}
+.list .meta { font-size: 12px; color: var(--muted); }
+.list .kcal { font-weight: 700; color: var(--red); }
+.list .del { color: var(--muted); border: 0; background: none; font-size: 18px; cursor: pointer; padding: 0 4px; }
+.total-box { text-align: center; font-size: 15px; }
+.total-box b { color: var(--red); font-size: 20px; }
+
+/* 趋势页 */
+.chip { padding: 7px 16px; border: 1px solid var(--line); background: #fff;
+  border-radius: 99px; font-size: 13px; color: var(--muted); cursor: pointer;
+  transition: all .15s; }
+.chip.active { border-color: var(--primary); color: var(--primary); background: var(--primary-light); font-weight: 600; }
+
+.guide { padding-left: 18px; font-size: 13px; color: var(--ink); line-height: 1.8; }
+.guide code { background: var(--line-light); padding: 2px 6px; border-radius: 5px; font-size: 12px; word-break: break-all; color: var(--primary-d); }
+details summary { cursor: pointer; font-weight: 600; color: var(--ink); }
+
+/* 登录遮罩 */
+.login-mask {
+  position: fixed; inset: 0; background: rgba(248,250,252,.96); z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+}
+.login-card {
+  background: var(--card); border: 1px solid var(--line); border-radius: 20px;
+  padding: 28px 24px; width: 86%; max-width: 360px;
+  box-shadow: 0 10px 40px rgba(0,0,0,.08);
+}
+.login-card h2 { margin: 0 0 6px; font-size: 20px; }
+.login-card input { margin: 16px 0 6px; }
+.err { color: var(--red); font-size: 13px; min-height: 18px; margin: 0; }
+.ok { color: var(--green); font-size: 13px; margin-top: 10px; min-height: 18px; }
+
+/* ===== 首页：热量圆环 ===== */
+.hero {
+  background: var(--card); border: 1px solid var(--line); border-radius: 20px;
+  padding: 26px 16px 18px; margin-bottom: 14px;
+  display: flex; flex-direction: column; align-items: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+.ring-wrap { position: relative; width: 200px; height: 200px; }
+.ring { width: 200px; height: 200px; transform: rotate(-90deg); }
+.ring-track { fill: none; stroke: var(--line); stroke-width: 14; }
+.ring-prog { fill: none; stroke: var(--primary); stroke-width: 14; stroke-linecap: round;
+  transition: stroke-dashoffset .7s ease, stroke .3s; }
+.ring-center { position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; }
+.ring-num { font-size: 40px; font-weight: 800; line-height: 1; color: var(--ink); }
+.ring-sub { font-size: 13px; color: var(--muted); margin-top: 3px; }
+.ring-pct {
+  margin-top: 10px; font-size: 12px; font-weight: 700; color: var(--primary);
+  background: var(--primary-light); padding: 3px 12px; border-radius: 99px;
+}
+
+/* 关键指标网格 */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.stat {
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  padding: 13px 14px; display: flex; flex-direction: column; gap: 4px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.03);
+}
+.stat b { font-size: 18px; color: var(--ink); }
+.stat.pos b { color: var(--green); }
+.stat.neg b { color: var(--red); }
+
+/* 餐次占比条 + 列表 */
+.meal-bar { display: flex; height: 12px; border-radius: 99px; overflow: hidden;
+  background: var(--line-light); margin: 4px 0 12px; }
+.meal-bar > div { height: 100%; }
+.meal-list { list-style: none; padding: 0; margin: 0; }
+.meal-list li { display: flex; justify-content: space-between; align-items: center;
+  padding: 9px 0; border-bottom: 1px solid var(--line-light); font-size: 14px; }
+.meal-list li:last-child { border-bottom: 0; }
+.meal-list .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+  margin-right: 8px; vertical-align: middle; }
