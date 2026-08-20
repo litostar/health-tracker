@@ -1,0 +1,19 @@
+{
+  "name": "健康与热量追踪工作台",
+  "short_name": "健康追踪",
+  "description": "个人健康与热量追踪：动态 TDEE、热量缺口、Apple Watch 同步",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f2f4f7",
+  "theme_color": "#1f2d3d",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
