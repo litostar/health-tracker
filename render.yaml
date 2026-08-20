@@ -1,0 +1,20 @@
+# Render 部署配置（一键部署用）。在 Render 控制台「New → Blueprint」导入本仓库即可。
+services:
+  - type: web
+    name: health-tracker
+    runtime: python
+    plan: free                       # 免费层；数据库文件放下面的持久磁盘
+    rootDir: backend                 # 以 backend/ 为运行目录
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: API_TOKEN
+        generateValue: true          # Render 自动生成强随机口令，部署后去环境变量里复制
+      - key: DATABASE_URL
+        value: sqlite:////data/health.db   # 4 个斜杠 = 绝对路径 /data/health.db
+      - key: CORS_ORIGINS
+        value: "*"
+    disk:                            # 持久磁盘：否则每次部署数据库会被清空
+      name: data
+      mountPath: /data
+      sizeGB: 1
