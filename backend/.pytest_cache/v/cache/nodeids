@@ -1,0 +1,7 @@
+[
+  "tests/test_api.py::test_auth_required",
+  "tests/test_api.py::test_food_and_summary",
+  "tests/test_api.py::test_profile_flow",
+  "tests/test_api.py::test_trend",
+  "tests/test_api.py::test_watch_sync_and_tdee"
+]
